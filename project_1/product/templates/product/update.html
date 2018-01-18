@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+
+{% block 'body' %}
+
+product update
+<a href="{% url 'product:create' %}"><input type="button" value="create"></a>
+<a href="{% url 'product:index' %}"><input type="button" value="index"></a>
+
+<div class='div_form' style="width:50%;margin-left:50%;transform:translateX(-50%);" >
+        <form method="POST" action='{% url "product:updatedb" %}' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group" >
+                <label for="productname">productname</label>
+                <input type="text" class="form-control" id="productname" placeholder="productname" name="productname" value="{{ datasdict.productname }}">
+            </div>
+            <div class="form-group">
+                <label for="productbrand">productbrand</label>
+                <select class="form-control" id="productbrand" name="productbrand" >
+                    {% for brand in brands %}
+    
+                    <option value="{{brand.0}}">{{brand.1}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="rating">rating</label>
+                <select class="form-control" id="rating" name="rating" >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div>
+                <label for="productcategory">productcategory</label>
+                <select class="form-control" id="productcategory" name="productcategory">
+                    
+                        {% for category in categorys %}
+    
+                        <option value="{{category.0}}">{{category.1}}</option>
+                        {% endfor %}
+                    
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="productprice">price</label>
+                <input type="number" class="form-control" id="productprice" placeholder="productprice" name="productprice" value="{{datasdict.productprice}}">
+            </div>
+            <div class="form-group">
+                <label for="productimg">productimg</label>
+                <input type="button" value="changepic" id="changepic">
+                <input type="file" class="form-control" id="productimg" placeholder="productimg" name="productimg" style="opacity:0;">
+                <img src="/uploadfiles/{{datasdict.productimg}}" id="img1" alt="">
+            </div>
+            <div class="form-group">
+                <label for="description">description</label>
+                <textarea class="form-control" id="description" rows="3" name="description" value="">{{datasdict.productdescription}}</textarea>
+            </div>
+            <input type="hidden" value="{{pid}}" name="productid">
+            <input type="submit" value="suubmit">
+        </form>
+    
+    </div>
+
+{% endblock %}
+
+
+{% block 'script' %}
+
+<script>
+        // document.getElementById('rating').value('{{datasdict.rating}}');
+        var a = parseInt('{{datasdict.rating}}')-1;
+        var b = parseInt('{{datasdict.brandid}}')-1;
+        var c = parseInt('{{datasdict.catergoryid}}')-1;
+    
+        document.getElementById("rating").selectedIndex =a;
+        document.getElementById("productbrand").selectedIndex = b;
+        document.getElementById("productcategory").selectedIndex = c;
+        // document.getElementById('productbrand').value('{{datasdict.brandid}}')
+    </script>
+
+    <script>
+
+
+
+
+
+        document.querySelector('#changepic').addEventListener('click',function(){
+            document.querySelector('#productimg').setAttribute("style", "opacity:1")
+        })
+
+
+        document.querySelector('#productimg').addEventListener('change',function(event){
+            var file = this.files[0];
+            var reader = new FileReader();
+            var theImg  = document.querySelector('#img1');
+            reader.readAsDataURL(file);
+            reader.addEventListener('load',function(event){
+                theImg.src = event.target.result;
+            })
+
+        })
+    
+    
+    </script>
+
+
+{% endblock %}

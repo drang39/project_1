@@ -1,0 +1,38 @@
+*{
+    //border:1px black solid;
+    margin:0;
+    padding:0;
+}
+
+.wrapper {
+	position: relative;
+	
+}
+.container-fluid {
+    padding:0;
+}
+.nav_style {
+	z-index: 1;
+	background-color: transparent !important;
+	border-bottom: 1px rgba(255,255,255,0.1) solid;
+
+}
+.navbar-nav .nav-item .nav_item_style {
+	color: white;
+}
+.navbar #white {
+	color: white ;
+}
+.btn1{
+	margin-right: 20px;
+}
+.btn2 {
+	margin-right: 20px;
+}
+.navbar {
+	padding-top: 0;
+}
+.nav-link,.navbar-brand {
+
+	font-size: 2em 
+}

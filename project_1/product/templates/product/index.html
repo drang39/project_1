@@ -1,0 +1,75 @@
+ {% extends 'base.html' %}
+ {% block 'css' %}
+
+ {% endblock %}
+ {% block 'body' %}
+
+
+<div class="container" style="height:700px;">
+    <table class="table table-striped" style="margin-top:10%;" >
+        
+        <thead class="thead-inverse">
+
+            <tr>
+              <th>#</th>
+              <th>ProdcutName</th>
+              <th>Category</th>
+              <th>Brand</th>
+              <th>Rating</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Imgname</th>
+              <th>img</th>
+              <th>buttons</th>
+              
+            </tr>
+
+        </thead>
+
+        <tbody>
+            {% for data in datas %}
+            <tr>
+                {% for item in data %}
+                    <td >{{item}}</td>
+                {%endfor%}
+                <td>
+                    <img src="/uploadfiles/{{ data.7 }}" alt="" style="width:100px;height:100px;">
+                </td>
+                
+                <td>
+                    <form action="{% url 'product:update' %}" method="POST" style="display:inline-block">
+                        {% csrf_token %}
+                        <input type="submit" value="edit" class="btn btn-danger">
+                        <input type="hidden" value="{{data.0}}" name="editid">
+                    </form>
+                     <form action="{% url 'product:delete' %}" method="POST" style="display:inline-block">
+                        {% csrf_token %}
+                        <input type="submit" value="delete" class="btn btn-danger">
+                        <input type="hidden" value="{{data.0}}" name="deleteid">
+                    </form>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <a href="{% url 'product:create' %}">
+            <input type="button" class="btn btn-primary" value="create">
+        </a>
+        
+    </table>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

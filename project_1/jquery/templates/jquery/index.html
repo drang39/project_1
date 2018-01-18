@@ -1,0 +1,45 @@
+{% extends "base.html" %} {% block 'body' %}
+<input type="button" value="get" id="buttonGet" class="btn btn-dark">
+<input type="button" value="post" id="buttonPost" class="btn btn-secondary">
+<input type="button" value="getJSON" id="buttonGetJSON" class="btn btn-info">
+<input type="button" value="ajax-xml" id="buttonAjax" class="btn btn-danger">
+
+
+<hr>
+<div id="show" class="row"></div>
+<hr> {% endblock %} {% block 'script'%}
+<script>
+    $(document).ready(function () {
+        $('#buttonGet').click(function () {
+            var url = "httpget"
+            $.get(url,{'name':'jack','age':30},function(data){
+                $('#show').text(data)
+            })
+        })
+        $('#buttonPost').click(function () {
+            var url = "httppost"
+            $.post(url,{'name':'jack','age':32},function(data){
+                $('#show').text(data)
+            })
+           
+        })
+
+        $('#buttonGetJSON').click(function () {
+            var url = "getjson"
+           
+        })
+        $('#buttonAjax').click(function () {
+            var url = "getxml" 
+            
+        })
+
+        //解決post csrf問題
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader('X-CSRFToken',
+                    '{{ csrf_token }}');
+            }
+        });
+       
+    })
+</script> {% endblock %}

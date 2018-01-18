@@ -1,0 +1,41 @@
+ 
+ {% block 'nav' %}
+ <!-- nav -->
+ <nav class="navbar navbar-expand-lg bg-light navbar-light nav_style">
+    <a class="navbar-brand" id="white" href="{% url 'home:index' %}">Beer Deer</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" id="white" href="{% url 'home:index' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item nav_item_sytle" style="color:white">
+          <a class="nav-link" id="white" href="{% url 'home:about' %}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" id="white" href="{% url 'product:index' %}">Beer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" id="white" href="#">info</a>
+        </li>
+      </ul>
+      {%if user.is_authenticated %}
+      <span class="alert-pimary">hello {{user.get_username}}</span>
+      <a href="{% url 'user:logout' %}" class="btn btn-primary">Log out</a> 
+      {%else%}
+       <a href="{% url 'user:signup' %}" class="btn btn-primary btn1">Sign up</a>
+      <a class="btn btn-primary btn2" href="{% url 'user:login' %}">Log in</a>
+      {%endif%}
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+    <!-- endnav -->
+    <div class="clear"></div>
+
+{% endblock %}

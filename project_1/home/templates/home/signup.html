@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+
+
+
+
+
+<title>Sign up</title>
+<link href="../../static/signup/css/style.css" rel='stylesheet' type='text/css' />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content=">Un Boxed Sign up Form Responsive, Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+<!-- //end-smoth-scrolling -->
+<link href="//fonts.googleapis.com/css?family=Rationale" rel="stylesheet">
+<!-- js -->
+<script type="text/javascript" src="../../static/signup/js/jquery-2.1.4.min.js"></script>
+<!-- //js -->
+</head>
+<body> 
+	 <div data-vide-bg="videos/typing">
+	 <div class="w3-agile-signup-top">
+	 <h1>Signup</h1>
+		<div class="main">
+                <div class="login-top left">
+			         <div class="social_icons">
+						<div class="w3-signup-head-top">
+							<h3>Signup with</h3>
+						</div>
+						<!-- Facebook -->
+						<div class="slide-social w3l">
+						<a href="#">
+							
+							<div class="facebook icon"> <i class="facebook"></i> </div>
+							<div class="facebook slide">
+								<p>Facebook</p>
+							</div>
+							<div class="clear"></div>
+							</a>
+						</div>
+						<!-- Twitter -->
+						<div class="slide-social w3l">
+						<a href="#">
+							<div class="twitter icon"> <i class="twitter"></i></div>
+							<div class="twitter slide">
+								<p>Twitter</p>
+							</div>
+							<div class="clear"></div>
+							</a> 
+						</div>
+						<div class="w3-signup-head2-top">
+							<h3>OR</h3>
+						</div>
+						
+					</div>
+								<form action="#" method="post">
+									{% csrf_token %}
+									<input type="text" name="firstname" class="name" placeholder="First Name" required="">
+									<input type="text" name="lastname" class="name" placeholder="Last Name" required="">
+									<input type="text" name="email" class="email" placeholder="Your Email" required="">	
+									<input type="password" name="userpwd" class="password" placeholder="Password" required="">
+									<input type="password" name="userpwd" class="password" placeholder="Confirm Password" required="">	
+										
+									<input type="submit" value="SIGN UP">
+								</form>
+								<div class="w3-bottom-text">
+								<h3><a href="#">Already Have an account<span>?</span></a></h3>
+								<h4><a href="#">Login</a></h4>
+								</div>
+								<div class="clear"></div>
+						</div>	
+							
+		
+		</div>	
+	<div class="clear"></div>
+     <div class="copy-right w3l-agile">
+		<p> © 2017 Un Boxed  Signup Form . All Rights Reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+	</div>
+	<div class="clear"></div>
+</div>
+</div>
+
+		<script src="../../static/signup/js/jquery.vide.min.js"></script>					
+
+
+{%endblock%}
