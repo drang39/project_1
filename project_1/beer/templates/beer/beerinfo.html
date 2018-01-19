@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block 'css' %}
+
+{% endblock %}
+
+{% block 'body' %}
+
+
+<h1>{{product.productname}}</h1>
+<h1>{{product.rating}}</h1>
+<h1>{{product.category_id.categoryname}}</h1>
+<h1>{{product.brand_id.brandname}}</h1>
+<h1>{{product.description}}</h1>
+<img src="/uploadfiles/{{product.productimg}}" alt="">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block 'script' %}
+
+{% endblock %}

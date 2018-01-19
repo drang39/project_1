@@ -1,101 +1,41 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %} 
 
 
 {% block 'css' %}
-<link rel="stylesheet" href="../../static/styles/index.css">
+
+<link rel="stylesheet" type="text/css" href="../../static/styles/index1.css"> 
 {% endblock %}
 
 {% block 'body' %}
 
 
+<link rel="stylesheet" type="text/css" href="../../static/styles/bootstrap/css/bootstrap.css">
+<div class="container-fluid">
+	
+	{% for category in categorys %}
+	<div class="c btn btn-primary" data-id="{{category.id}}">{{category.categoryname}}</div>
+	{% endfor %}
+</div>
+<div class="container">
+	<div class="row beer-list">
 
-<div class="context">
-	<div class="productbox">
-		<div class="row">
-			<div class="item">
-				<div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
+		{% for product in products %}
+		<div class="col-xs-4 col-sm-3 col-md-3 col-lg-2 item" name="{{product.category_id.id}}">
+			<a href="{%url 'beer:beerinfo' product.id%}">
+				<div class="pic center-block">
+					<img src="/uploadfiles/{{product.productimg}}" alt="" width="280" height="400" class="img-responsive col-xs-12">
 				</div>
-				<img src="material/cherng.jpg">
-			</div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
+				<div class="info">
+					<span>
+						<h2>{{product.productname}}</h2>
+						<p>{{product.brand_id.brandname}}</p>
+						<p></p>
+						<p></p>
+					</span>
+				</div>
+			</a>
 		</div>
-
-		<div class="row">
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-		</div>
-
-		<div class="row">
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-			<div class="item"><div class="detail">
-					<h2>Mikkeller</h2>
-					<p>Weissbier<br>7%</p>
-				</div><img src="material/cherng.jpg"></div>
-		</div>
-
+		{% endfor %}
 
 
 
@@ -110,23 +50,20 @@
 
 
 
+{%endblock%} 
 
 
 
+{% block 'script' %} 
+
+<script>
+	$('.c').click(function(){
+		$('.beer-list>div[name!='+cid+']').show(1,function(){})
+		var cid = parseInt($(this).data('id'))
+		$('.beer-list>div[name!='+cid+']').hide(1,function(){})
+		
+	})
+</script>
 
 
-</div> <!-- end wrapper -->
-
-
-
-
-
-
-
-
-
-{%endblock%}
-
-
-{% block 'script' %}
 {%endblock%}
