@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block 'css' %}
+
+{% endblock %}
+
+
+{% block 'body' %}
+
+
+<form action="{% url 'beer:edit' comment.id %}" method="post">
+        {% csrf_token %}
+        <label for="rating">Rating: </label>
+        <input id="rating" type="number" name="rating" value="{{ comment.rating }}">
+    
+        <label for="comment">How you feel: </label>
+      
+        <textarea name="comment" id="comment" cols="30" rows="10">{{comment.comment}}</textarea>
+    
+        <label for="food">Drink with food: </label>
+        <input id="food" type="text" name="food" value="{{ comment.food }}">
+        <select name="fan" id="fan">
+            <option value="1">fan</option>
+            <option value="0">not a fan</option>
+        </select>
+        
+    
+    
+    
+    
+        <input type="submit" value="OK">
+</form>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+{% block 'script' %}
+<script></script>
+{% endblock %}

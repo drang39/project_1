@@ -13,11 +13,53 @@
 <h1>{{product.category_id.categoryname}}</h1>
 <h1>{{product.brand_id.brandname}}</h1>
 <h1>{{product.description}}</h1>
+<h2>{{product.id}}</h2>
 <img src="/uploadfiles/{{product.productimg}}" alt="">
 
 
+<form action="{%url 'beer:beerinfocomment' product.id %}" method="post">
+        {% csrf_token %}
+    <label for="rating">Rating: </label>
+    <input id="rating" type="number" name="rating" value="{{ rating }}">
+
+    <label for="comment">How you feel: </label>
+  
+    <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+
+    <label for="food">Drink with food: </label>
+    <input id="food" type="text" name="food" value="{{ food }}">
+    <select name="fan" id="fan">
+        <option value="1">fan</option>
+        <option value="0">not a fan</option>
+    </select>
+    
 
 
+
+
+    <input type="submit" value="OK">
+</form>
+
+
+<hr>
+
+<div>
+    {% for comment in comments %}
+    <h1>{{comment.comment}}</h1>
+    <h2>{{comment.user_id.username}}</h2>
+    {% if user.get_username == comment.user_id.username %}
+    <form action="{%url 'beer:edit' comment.id %}">
+            {% csrf_token %}
+        <button class="btn btn-primar">edit</button>
+    </form>
+    <form action="{% url 'beer:delete' %}" method="post">
+            {% csrf_token %}
+        <input type="hidden" value="{{comment.id}}" name="act">
+        <button class="btn btn-danger">delete</button>
+    </form>
+    {%endif%}
+    {% endfor %}
+</div>
 
 
 

@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -30,4 +30,12 @@ class Product(models.Model):
     class Meta:
         db_table = "product"
 
-
+class Comment(models.Model):
+    rating = models.IntegerField(null=False)
+    comment = models.CharField(max_length=200,null=True)
+    food = models.CharField(max_length=100,null = True)
+    fan = models.IntegerField(null=False)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    class Meta:
+        db_table = "comment"
