@@ -45,8 +45,8 @@ def beerinfocomment(request,id):
 
             fan = request.POST['fan']
             comment = Comment.objects.create(fan = fan ,product_id = Product.objects.get(id=id) ,rating = rating,comment = comment, food = food,user_id =User.objects.get(id=(request.user.id)))
-            
-            return HttpResponse('good')
+            pid = str(comment.product_id.id)
+            return redirect('../beerinfo/'+pid)
         else :
             return HttpResponse('something went wrong')
 def beercommentedit(request,id):
@@ -69,7 +69,7 @@ def beercommentdelete(request):
     if request.method =='POST':
         id = request.POST['act']
         comment = Comment.objects.get(id=id).delete()
-        return render(request,'beer/index.html',locals())
+        return redirect('/beer')
     return render(request,'beer/index.html')
 def membercomment(request):
     uid = request.user.id
