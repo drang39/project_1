@@ -49,6 +49,7 @@ def beerinfocomment(request,id):
             return redirect('../beerinfo/'+pid)
         else :
             return HttpResponse('something went wrong')
+        
 def beercommentedit(request,id):
     if request.method == 'POST':
         comment = Comment.objects.get(id=int(id))

@@ -45,9 +45,20 @@ def signup(request):
                 warning = 'something went wrong pls do it again'
                 return render(request,'user/signup.html',locals())
     return render(request,'user/signup.html',locals())
-def update(request):
+def userinfo(request):
 
-    pass
+    if request.method =='POST':
+        usn = request.POST['usn']
+        u = User.objects.get(username=usn)
+        u.email = request.POST['emailupdate']
+
+        u.save()
+
+    
+
+
+    return render(request,'user/userinfo.html',locals())
+
 
 def login_view(request):
     if request.user.is_authenticated :
@@ -66,10 +77,31 @@ def login_view(request):
             
             warning = 'username or password is incorrect'
             
-            render(request,'user/login.html',locals())
+            return render(request,'user/login.html',locals())
 
     return render(request,'user/login.html',locals())
 
 def logout_view(request):
     logout(request)
     return render(request,'home/index.html')
+
+
+def userinfoedit(request):
+    return render(request,'user/userinfoedit.html')
+
+
+def resetpwd(request):
+    if request.method=='POST':
+        password = request.POST['opwd']
+        username= request.POST['username']
+
+        u1 = authenticate(username=username,password=password)
+        if u1 :
+            u = User.objects.get(username=username)
+            u.set_password(request.POST['npwd'])
+            u.save()
+            warning = 'pls use new password to login'
+            return render(request,'user/login.html', {'warning': warning})
+        else :
+            return HttpResponse('password was wrong')
+    return render(request,'user/resetpwd.html')

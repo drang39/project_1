@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import datetime
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.models import User
 # Create your views here.
 def index(request):
     # return HttpResponse('<h2>hello</h2>')
@@ -25,8 +26,7 @@ def contact(request):
     # return HttpResponse('<h2>contact</h2>')
     return render(request,'home/contact.html',locals())
 def login(request):
-    if request.method == 'POST':
-       name =  request.POST['username']
+    
         
     return render(request,'home/login.html',locals())
 def signup(request):

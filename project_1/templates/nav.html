@@ -29,6 +29,7 @@
       {%if user.is_authenticated %}
       <span class="alert-pimary">hello {{user.get_username}}</span>
       <a href="{% url 'beer:membercomment' %}"  class="btn btn-primary">my comments</a>
+      <a href="{% url 'user:userinfo' %}" class="btn btn-primary">my info</a>
       <a href="{% url 'user:logout' %}" class="btn btn-primary">Log out</a> 
       {%else%}
        <a href="{% url 'user:signup' %}" class="btn btn-primary btn1">Sign up</a>

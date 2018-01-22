@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block 'css' %}
+
+{% endblock %}
+
+
+
+{% block 'body' %}
+
+<form action="{% url 'user:userinfo' %}" method="post">
+    {% csrf_token %}
+    <h1>{{user.username}}</h1>
+    <input type="hidden" value="{{user.username}}" name="usn">
+    <input type="text" value="{{user.email}}" name="emailupdate">
+    
+    <input type="submit" value="submit">
+
+
+</form>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block 'script' %}
+
+{% endblock %}
