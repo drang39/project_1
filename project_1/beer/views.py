@@ -17,7 +17,7 @@ def index(request):
 def beerinfo(request,id):
     
     product = Product.objects.get(id=int(id))
-    comments = Comment.objects.filter(product_id=3)
+    comments = Comment.objects.filter(product_id=int(id))
     print(comments)
     return render(request,'beer/beerinfo.html',locals())
 # def seleted_index(request,id):
@@ -45,10 +45,11 @@ def beerinfocomment(request,id):
 
             fan = request.POST['fan']
             comment = Comment.objects.create(fan = fan ,product_id = Product.objects.get(id=id) ,rating = rating,comment = comment, food = food,user_id =User.objects.get(id=(request.user.id)))
+            
             return HttpResponse('good')
         else :
             return HttpResponse('something went wrong')
-def beerinfoedit(request,id):
+def beercommentedit(request,id):
     if request.method == 'POST':
         comment = Comment.objects.get(id=int(id))
         comment.comment = request.POST['comment']
@@ -57,16 +58,22 @@ def beerinfoedit(request,id):
         comment.fan = request.POST['fan']
         comment.save()
         pid = str(comment.product_id.id)
-        # product = Product.objects.get(id=int(id))
-        # comments = Comment.objects.filter(product_id=pid)
+
         return redirect('../beerinfo/'+pid)
         
     else:
         comment = Comment.objects.get(id=int(id))
+        
         return render(request,'beer/beerinfoedit.html',locals())
-def beerinfodelte(request):
+def beercommentdelete(request):
     if request.method =='POST':
         id = request.POST['act']
         comment = Comment.objects.get(id=id).delete()
         return render(request,'beer/index.html',locals())
     return render(request,'beer/index.html')
+def membercomment(request):
+    uid = request.user.id
+
+    comments = Comment.objects.filter(user_id=int(uid))
+
+    return render(request,'beer/membercomment.html',locals())

@@ -48,11 +48,11 @@
     <h1>{{comment.comment}}</h1>
     <h2>{{comment.user_id.username}}</h2>
     {% if user.get_username == comment.user_id.username %}
-    <form action="{%url 'beer:edit' comment.id %}">
+    <form action="{%url 'beer:commentedit' comment.id %}">
             {% csrf_token %}
-        <button class="btn btn-primar">edit</button>
+        <button class="btn btn-primary">edit</button>
     </form>
-    <form action="{% url 'beer:delete' %}" method="post">
+    <form action="{% url 'beer:commentdelete'  %}" method="post">
             {% csrf_token %}
         <input type="hidden" value="{{comment.id}}" name="act">
         <button class="btn btn-danger">delete</button>

@@ -9,7 +9,7 @@
 {% block 'body' %}
 
 
-<form action="{% url 'beer:edit' comment.id %}" method="post">
+<form action="{% url 'beer:commentedit' comment.id %}" method="post">
         {% csrf_token %}
         <label for="rating">Rating: </label>
         <input id="rating" type="number" name="rating" value="{{ comment.rating }}">
