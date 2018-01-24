@@ -8,4 +8,6 @@ urlpatterns = [
     path('beerinfoedit/<int:id>',views.beercommentedit,name='commentedit'),
     path('beerinfodelete',views.beercommentdelete,name='commentdelete'),
     path('membercomment',views.membercomment,name='membercomment'),
+    path('beersearch',views.beersearch,name='search'),
+    path('beersearchcontent',views.beersearchcontent,name='beersearchcontent'),
 ]

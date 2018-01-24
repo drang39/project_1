@@ -37,5 +37,6 @@ class Comment(models.Model):
     fan = models.IntegerField(null=False)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    time = models.DateField(null=True)
     class Meta:
         db_table = "comment"

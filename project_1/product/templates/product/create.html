@@ -1,13 +1,5 @@
-{% extends 'base.html' %} {% block 'body' %} product create
-<a href="{% url 'product:index' %}">
-    <input type="button" value="index">
-</a>
-<a href="{% url 'product:update' %}">
-    <input type="button" value="update">
-</a>
+{% extends 'base.html' %} {% block 'body' %}
 
-<br>
-<br>
 <div class='div_form' style="width:50%;margin-left:50%;transform:translateX(-50%);" >
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}

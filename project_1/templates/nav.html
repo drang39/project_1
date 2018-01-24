@@ -35,9 +35,14 @@
        <a href="{% url 'user:signup' %}" class="btn btn-primary btn1">Sign up</a>
       <a class="btn btn-primary btn2" href="{% url 'user:login' %}">Log in</a>
       {%endif%}
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <form class="form-inline my-2 my-lg-0" action="{% url 'beer:search' %}" method="post">
+        {% csrf_token %}
+       
+        <div class="ui-widget">
+          <label for="searchtext"></label>
+        <input class="form-control mr-sm-2" type="text" name="searchtext" id="searchtext" placeholder="Search">
         <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+      </div>
       </form>
     </div>
   </nav>

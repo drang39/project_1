@@ -25,5 +25,6 @@ urlpatterns = [
     path('user/',include('user.urls')),
     path('jquery/',include('jquery.urls')),
     path('beer/',include('beer.urls')),
+    path('article/',include('article.urls')),
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

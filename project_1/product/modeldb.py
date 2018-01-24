@@ -35,7 +35,7 @@ class Product:
                             product.productname,categoryname,brand.brandname,
 
                             product.rating,
-                            product.price,product.description,product.productimg
+                            product.price,product.productimg
 
                             from product left join brand on product.brand_id_id = brand.id 
                             left join category on product.category_id_id = category.id """)

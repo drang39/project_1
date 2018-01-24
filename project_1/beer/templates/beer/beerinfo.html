@@ -1,64 +1,133 @@
-{% extends 'base.html' %}
-
-
-{% block 'css' %}
-
-{% endblock %}
-
-{% block 'body' %}
-
-
-<h1>{{product.productname}}</h1>
-<h1>{{product.rating}}</h1>
-<h1>{{product.category_id.categoryname}}</h1>
-<h1>{{product.brand_id.brandname}}</h1>
-<h1>{{product.description}}</h1>
-<h2>{{product.id}}</h2>
-<img src="/uploadfiles/{{product.productimg}}" alt="">
-
-
-<form action="{%url 'beer:beerinfocomment' product.id %}" method="post">
-        {% csrf_token %}
-    <label for="rating">Rating: </label>
-    <input id="rating" type="number" name="rating" value="{{ rating }}">
-
-    <label for="comment">How you feel: </label>
-  
-    <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
-
-    <label for="food">Drink with food: </label>
-    <input id="food" type="text" name="food" value="{{ food }}">
-    <select name="fan" id="fan">
-        <option value="1">fan</option>
-        <option value="0">not a fan</option>
-    </select>
-    
+{% extends 'base.html' %} {% block 'css' %}
+<link rel="stylesheet" href="../../static/styles/beerinfo.css"> {% endblock %} {% block 'body' %}
 
 
 
 
-    <input type="submit" value="OK">
-</form>
+<div class="container">
+    <!-- start productinfo  -->
+    <div class="row">
+        <div class="l col-4">
+            <img src="/uploadfiles/{{product.productimg}}" alt="">
+        </div>
+
+        <div class="r col-8">
+
+            <div class="title">
+                <h2>{{product.productname}}</h2>
+                <h4>{{product.category_id.categoryname}}</h4>
+                <h4>{{product.brand_id.brandname}}</h4>
+                <h4>{{product.rating}}</h4>
+            </div>
+            <hr>
+            <div class="description">
+                <p>{{product.description}}</p>
+            </div>
 
 
-<hr>
+        </div>
+    </div>
 
-<div>
-    {% for comment in comments %}
-    <h1>{{comment.comment}}</h1>
-    <h2>{{comment.user_id.username}}</h2>
-    {% if user.get_username == comment.user_id.username %}
-    <form action="{%url 'beer:commentedit' comment.id %}">
-            {% csrf_token %}
-        <button class="btn btn-primary">edit</button>
-    </form>
-    <form action="{% url 'beer:commentdelete'  %}" method="post">
-            {% csrf_token %}
-        <input type="hidden" value="{{comment.id}}" name="act">
-        <button class="btn btn-danger">delete</button>
-    </form>
-    {%endif%}
-    {% endfor %}
+    <!-- endprodcutinfo -->
+
+    <!-- start comment box   -->
+    <div class="row comment-box">
+        <div class="col">
+            <form class="form-control" action="{%url 'beer:beerinfocomment' 8 %}" method="post" id="form1">
+                {% csrf_token %}
+                <div class="form-group rating">
+
+
+                    <label for="">Rating:</label>
+                    <img src="/uploadfiles/starb.jpg" alt="" id='1' class="pic">
+                    <img src="/uploadfiles/starb.jpg" alt="" id="2" class="pic">
+                    <img src="/uploadfiles/starb.jpg" alt="" id="3" class="pic">
+                    <img src="/uploadfiles/starb.jpg" alt="" id="4" class="pic">
+                    <img src="/uploadfiles/starb.jpg" alt="" id="5" class="pic">
+
+                    <div class="fan">
+                        <label for="">Like or Dislike: </label>
+                        <i class="fa fa-thumbs-o-up fa-3x" id="fan1" aria-hidden="true"></i>
+                        <i class="fa fa-thumbs-o-down fa-3x" id="fan2" aria-hidden="true"></i>
+                    </div>
+
+                </div>
+                <div class="clear"></div>
+                <hr>
+                <div class="comment-bottom row">
+                    <div class="col-2"></div>
+                    <div class="notes col-8">
+                        <div class="form-group">
+                            <label for="comment">Mark down every sense you experienced</label>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea name="comment" id="comment" cols="89" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" id="fan" name="fan" value="{{ fan }}">
+                            <input type="hidden" id="rating" name="rating" value="{{ rating }}">
+                            <button type="button" id="btn1" class="btn btn-primary btn-block">Submit</button>
+                        </div>
+                    </div>
+
+                    <div class="col-2"></div>
+                </div>
+
+
+
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- endcommentbox -->
+
+    <!-- start user comment box -->
+
+
+    <div class="row">
+        {% for comment in comments%}
+        <div class="card text-center col-6">
+            <div class="card-header">
+                <h4> {{comment.user_id.username}}</h4>
+
+            </div>
+            <div class="card-block">
+
+                <h4 class="card-title" id="star{{comment.id}}">
+                    <i class="fa fa-star fa-1x" aria-hidden="true"></i>
+                </h4>
+
+                <p class="card-text">{{comment.comment}}</p>
+                {% if user.get_username == comment.user_id.username %}
+                <form action="{%url 'beer:commentedit' comment.id %}" class="editbutton">
+                    {% csrf_token %}
+                    <button class="btn btn-primary">edit</button>
+                </form>
+                <form action="{% url 'beer:commentdelete'  %}" method="post" class="editbutton">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{comment.id}}" name="act">
+                    <button class="btn btn-danger">delete</button>
+                </form>
+                {%endif%}
+            </div>
+            <div class="card-footer text-muted">
+                {{comment.time}}
+            </div>
+        </div>
+
+
+
+
+        {% endfor %}
+    </div>
+
+
+
+
+
 </div>
 
 
@@ -79,8 +148,206 @@
 
 
 
-{% endblock %}
 
-{% block 'script' %}
 
-{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %} {% block 'script' %}
+<script>
+    '{%for i in comments%}'
+    t = ''
+    for (i = 0; i < '{{i.rating}}'; i++) {
+        t += '<i class="fa fa-star fa-1x" aria-hidden="true"></i>'
+
+
+    }
+    $('#star{{i.id}}').html(t)
+    '{% endfor %}'
+
+    $('.pic').mouseover(c);
+    $('.pic').mouseout(c2);
+    $('.pic').click(c5);
+    var x = 0;
+    var y = 0;
+    var z = 0;
+
+    function c5(e) {
+
+        if (y == 1) {
+
+            if (e.target.id < x) {
+                x = e.target.id;
+                y = 1;
+                z = 1;
+
+
+                document.getElementById('1').src = '/uploadfiles/starb.jpg';
+                document.getElementById('2').src = '/uploadfiles/starb.jpg';
+                document.getElementById('3').src = '/uploadfiles/starb.jpg';
+                document.getElementById('4').src = '/uploadfiles/starb.jpg';
+                document.getElementById('5').src = '/uploadfiles/starb.jpg';
+
+
+                for (var j = 1; j <= x; j++) {
+                    document.getElementById(j).src = '/uploadfiles/star.jpg';
+                }
+
+            } else if (e.target.id == x) {
+                x = 0;
+                y = 0;
+                z = 0;
+
+            } else {
+
+                x = e.target.id;
+                y = 1;
+                z = 1;
+
+                document.getElementById('1').src = '/uploadfiles/starb.jpg';
+                document.getElementById('2').src = '/uploadfiles/starb.jpg';
+                document.getElementById('3').src = '/uploadfiles/starb.jpg';
+                document.getElementById('4').src = '/uploadfiles/starb.jpg';
+                document.getElementById('5').src = '/uploadfiles/starb.jpg';
+
+
+                for (var j = 1; j <= x; j++) {
+                    document.getElementById(j).src = '/uploadfiles/star.jpg';
+                }
+            }
+
+
+
+        } else {
+            y = 1;
+            x = e.target.id;
+            z = 1;
+
+        }
+
+    }
+
+
+
+
+
+    function c(e) {
+        if (z == 1) {
+
+        } else {
+            var eleId = e.target.id;
+
+            for (var i = parseInt(eleId); i >= 0; i--) {
+                c1(i)
+            }
+        }
+
+    }
+
+    function c1(eleId) {
+        document.getElementById(eleId).src = '/uploadfiles/star.jpg';
+    }
+
+
+    function c2(e) {
+        if (y == 1) {
+
+        } else {
+            var eleId1 = e.target.id;
+
+            c3(eleId1);
+        }
+
+    }
+
+
+    function c3(eleId1) {
+        if (x != 0) {
+            c4(x)
+        }
+        else {
+            for (var i = parseInt(eleId1); i >= 0; i--) {
+                c4(i)
+            }
+        }
+    }
+
+    function c4(i) {
+        document.getElementById(i).src = '/uploadfiles/starb.jpg';
+    }
+    var f = -1;
+    $('#fan1').click(function () {
+
+
+        if (f == 0) {
+            $('#fan1').removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up');
+            $('#fan2').removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
+            f = 1;
+        }
+        else if (f == -1) {
+            $('#fan1').removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up');
+            f = 1;
+
+        }
+        else if (f == 1) {
+            $('#fan1').removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+            f = -1;
+        }
+
+
+
+
+    })
+
+    $('#fan2').click(function () {
+        if (f == 0) {
+
+            $('#fan2').removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
+            f = -1;
+        }
+        else if (f == -1) {
+            $('#fan2').removeClass('fa-thumbs-o-down').addClass('fa-thumbs-down');
+
+            f = 0;
+
+        }
+        else if (f == 1) {
+            $('#fan2').removeClass('fa-thumbs-o-down').addClass('fa-thumbs-down');
+            $('#fan1').removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+            f = 0;
+        }
+
+
+    })
+
+
+    $('#btn1').click(function () {
+        $('#rating').val(x)
+        $('#fan').val(f)
+        $('#form1').submit()
+    })
+
+
+</script> {% endblock %}

@@ -1,0 +1,73 @@
+
+.l{
+    margin-top: 5%;
+    background-color: #fcfcfc;
+}
+
+.r {
+    margin-top: 5%;
+    text-align: center;
+    background-color:#fcfcfc;
+}
+.title {
+    margin-top: 20px;
+    line-height: 10px;
+}
+.warpper {
+    background-color: #fcfcfc;
+}
+.l img {
+    border-radius: 10px;
+    filter:grayscale(5%);
+    width: 280px;
+    height: 400px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    padding: 30px;   
+}
+.descriptopn p {
+    font-weight: bold;
+}
+
+.comment-box {
+    background-color: #fcfcfc;
+}
+.rating {
+    margin-top: 30px;
+    display: inline-block;
+    line-height: 20px;
+    margin-left: 50px;
+
+}
+.rating label {
+
+    font-size: 35px;
+}
+.fan {
+    display: inline-block;
+    
+    margin-left: 300px;
+    
+}
+.fan i {
+  margin-left:20px;
+}
+.pic {
+    margin-left: 5px;
+    margin-bottom: 5px;
+    width: 35px;
+    height: 35px;
+}
+
+.notes label {
+    font-size: 25px;
+    padding: 5px;
+    text-align: center;
+    width: 100%;
+}
+.clear {
+    clear: both;
+}
+.comment-bottom {
+    margin-top: 30px;
+}

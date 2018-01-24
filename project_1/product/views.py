@@ -46,12 +46,13 @@ def create(request):
             fs = FileSystemStorage()
             fs.save(thefiles.name,thefiles)
         except:
-         productimg =''
+            productimg =''
 
 
         productinfo = tuple([productname,productbrand,rating,productcategory,productprice,productimg,description])
         pd.create(productinfo)
         return redirect('/product')
+    
 
 
 

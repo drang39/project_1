@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block 'css' %}
+
+{% endblock %}
+
+
+{% block 'body' %}
+
+<form method='post' action="">
+    <label for="title">Title:</label><br>
+    <input type="text" name="title" id="title">
+    <br>
+    <label for="category">Category:</label><br>
+    <input type="text" name="category" id="category">
+    <br>
+    <label for="content">Content:</label><br>
+    <textarea name="content" id="content" cols="30" rows="10"></textarea><br>
+    <button>submit</button>
+</form>
+
+
+{% endblock %}
+
+
+{% block 'script' %}
+
+{% endblock %}

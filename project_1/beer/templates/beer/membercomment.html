@@ -11,21 +11,42 @@
 {% block 'body' %}
 
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>IMG</th>
+            <th>Product</th>
+            <th>Rating</th>
+            <th>comment</th>
+            <th>buttons</th>
+        </tr>
+    </thead>
+    <tbody>
 {% for comment in comments %}
+        <tr>
+            <td><img src="/uploadfiles/{{comment.product_id.productimg}}" alt="" style="height:200px;"></td>
+            <td>{{comment.product_id.productname}}</td>
+            <td>{{comment.rating}}</td>
+            <td>{{comment.comment}}</td>
+            <td>
+            <form action="{%url 'beer:commentedit' comment.id %}">
+                    {% csrf_token %}
+                <button class="btn btn-primary">edit</button>
+            </form>
+            <form action="{% url 'beer:commentdelete' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{comment.id}}" name="act">
+                <button class="btn btn-danger">delete</button>
+            </form>
+        </td>
+        </tr>
 
-{{comment.comment}}
+        {%endfor%}
+    </tbody>
+</table>
 
-<form action="{%url 'beer:commentedit' comment.id %}">
-        {% csrf_token %}
-    <button class="btn btn-primary">edit</button>
-</form>
-<form action="{% url 'beer:commentdelete' %}" method="post">
-        {% csrf_token %}
-        <input type="hidden" value="{{comment.id}}" name="act">
-    <button class="btn btn-danger">delete</button>
-</form>
-<br>
-{%endfor%}
+
+
 
 
 
