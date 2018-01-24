@@ -7,6 +7,7 @@
 <div class="container">
     <!-- start productinfo  -->
     <div class="row">
+
         <div class="l col-4">
             <img src="/uploadfiles/{{product.productimg}}" alt="">
         </div>
@@ -23,7 +24,13 @@
             <div class="description">
                 <p>{{product.description}}</p>
             </div>
-
+            <div>
+                
+                      
+                <input id="pid" type="hidden" value="{{product.id}}">
+                <button type="button" id="addtocart">add to cart</button>
+          
+            </div>
 
         </div>
     </div>
@@ -176,7 +183,30 @@
 
 
 {% endblock %} {% block 'script' %}
+
+    <script>
+        $('#addtocart').click(function(){
+            url = '../beercartadd'
+            var pid = $('#pid').val()
+         $.get(url,{'pid':pid},function(data){
+            console.log(data)
+         })
+        })
+
+
+    </script>
+
+
+
+
+
+
 <script>
+
+
+
+
+
     '{%for i in comments%}'
     t = ''
     for (i = 0; i < '{{i.rating}}'; i++) {

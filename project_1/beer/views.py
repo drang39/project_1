@@ -6,6 +6,7 @@ from itertools import chain
 from .forms import CommetForm
 import datetime
 from django.core import serializers
+from collections import Counter
 
 # Create your views here.
 def index(request):
@@ -13,9 +14,7 @@ def index(request):
     products = Product.objects.all()
     brands = Brand.objects.all()
     categorys = Category.objects.all()
-    
 
-    
     return render(request,'beer/index.html',locals())
 def beerinfo(request,id):
     
@@ -104,36 +103,46 @@ def beersearch(request):
             return HttpResponse('dont have any match')
 def beersearchcontent(request):
     if request.method =='GET':
-        products = Product.objects.values('productname')
+  
         # products = serializers.serialize("json",products)
 
         p1 =  serializers.serialize("json", Product.objects.all())
         return HttpResponse(p1, content_type="application/json")
 
+def beercartadd(request):
+    
+    pid = request.GET['pid']
+    
+
+    
+    if 'product_id_list' in request.session:
+            li = request.session['product_id_list']
+            li.append(pid)
+            request.session['product_id_list'] = li
+
+    else :
+        li = []
+        li.append(pid)
+        request.session['product_id_list'] = li
+
+    print(request.session['product_id_list'])
 
 
+  
+    return redirect('/')
+def cartshow(request):
+    li = request.session['product_id_list']
+    
+    l = Counter(li)
+    print(l)
 
 
+    product_list = []
+   
+    for productid in li:
+        product_list.append(Product.objects.filter(id=productid))
+    
+    return render(request,'beer/cartshow.html',locals())
 
 
-
-
-
-
-        # li = []
-        # for i in products:
-            
-            
-        #        li.append(i['productname'])
-            
         
-        # print(li)
-        # print(products)
-        # return JsonResponse(products,safe=False)
-        # return JsonResponse({'products': list(products})
-        # response = {}
-        # response['product'] = serializers.serialize("json", Product.objects.all())
-        # print(response)
-        # return HttpResponse(response, content_type="application/json")
-
-      

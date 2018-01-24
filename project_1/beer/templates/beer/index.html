@@ -1,22 +1,18 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %} {% block 'css' %}
 
-
-{% block 'css' %}
-
-<link rel="stylesheet" type="text/css" href="../../static/styles/index1.css"> 
-{% endblock %}
-
-{% block 'body' %}
+<link rel="stylesheet" type="text/css" href="../../static/styles/index1.css"> {% endblock %} {% block 'body' %}
 
 
 <link rel="stylesheet" type="text/css" href="../../static/styles/bootstrap/css/bootstrap.css">
 <div class="container-fluid">
-	
+	<!-- <div id="droppable" style="background-color:yellow;width:200px;height:200px;">123</div>
+	<button id="check">check</button> -->
 	{% for category in categorys %}
 	<div class="c btn btn-primary" data-id="{{category.id}}">{{category.categoryname}}</div>
 	{% endfor %}
 </div>
 <div class="container">
+	
 	<div class="row beer-list">
 
 		{% for product in products %}
@@ -27,6 +23,7 @@
 				</div>
 				<div class="info">
 					<span>
+						<input type="hidden" class="idno" value="{{product.id}}">
 						<h2>{{product.productname}}</h2>
 						<p>{{product.brand_id.brandname}}</p>
 						<p></p>
@@ -36,8 +33,6 @@
 			</a>
 		</div>
 		{% endfor %}
-
-
 
 
 	</div>
@@ -50,20 +45,34 @@
 
 
 
-{%endblock%} 
+{%endblock%} {% block 'script' %}
+
+<!-- <script> 
+
+$( function() {
+		$( ".item" ).draggable();
+	  } );
+
+	  var li =[]
+	$("#droppable").droppable({
+		drop: function (event, ui) {
+			alert($(this).html())
+			
+				
+		}
+	});
+	$('#check').click(function(){
+		alert(li)
+	})
+</script> -->
 
 
-
-{% block 'script' %} 
 
 <script>
-	$('.c').click(function(){
-		$('.beer-list>div[name!='+cid+']').show(1,function(){})
+	$('.c').click(function () {
+		$('.beer-list>div[name!=' + cid + ']').show(1, function () { })
 		var cid = parseInt($(this).data('id'))
-		$('.beer-list>div[name!='+cid+']').hide(1,function(){})
-		
+		$('.beer-list>div[name!=' + cid + ']').hide(1, function () { })
+
 	})
-</script>
-
-
-{%endblock%}
+</script> {%endblock%}

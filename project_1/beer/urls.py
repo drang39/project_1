@@ -10,4 +10,6 @@ urlpatterns = [
     path('membercomment',views.membercomment,name='membercomment'),
     path('beersearch',views.beersearch,name='search'),
     path('beersearchcontent',views.beersearchcontent,name='beersearchcontent'),
+    path('beercartadd',views.beercartadd,name='beercartadd'),
+    path('cartshow',views.cartshow,name='cartshow'),
 ]
