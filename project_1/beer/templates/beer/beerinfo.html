@@ -25,11 +25,11 @@
                 <p>{{product.description}}</p>
             </div>
             <div>
-                
-                      
+
+
                 <input id="pid" type="hidden" value="{{product.id}}">
                 <button type="button" id="addtocart">add to cart</button>
-          
+
             </div>
 
         </div>
@@ -96,7 +96,7 @@
 
     <div class="row">
         {% for comment in comments%}
-        <div class="card text-center col-6">
+        <div class="card text-center col-6" style="margin-top:20px;border:2px solid #efefef">
             <div class="card-header">
                 <h4> {{comment.user_id.username}}</h4>
 
@@ -127,7 +127,7 @@
 
 
 
-
+        
         {% endfor %}
     </div>
 
@@ -184,17 +184,17 @@
 
 {% endblock %} {% block 'script' %}
 
-    <script>
-        $('#addtocart').click(function(){
-            url = '../beercartadd'
-            var pid = $('#pid').val()
-         $.get(url,{'pid':pid},function(data){
+<script>
+    $('#addtocart').click(function () {
+        url = '../beercartadd'
+        var pid = $('#pid').val()
+        $.get(url, { 'pid': pid }, function (data) {
             console.log(data)
-         })
         })
+    })
 
 
-    </script>
+</script>
 
 
 
