@@ -12,4 +12,6 @@ urlpatterns = [
     path('beersearchcontent',views.beersearchcontent,name='beersearchcontent'),
     path('beercartadd',views.beercartadd,name='beercartadd'),
     path('cartshow',views.cartshow,name='cartshow'),
+    path('cartedit',views.cartedit,name='cartedit'),
+    path('cartdelete',views.cartdelete,name='cartdelete'),
 ]

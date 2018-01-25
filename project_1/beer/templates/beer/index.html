@@ -5,18 +5,24 @@
 
 <link rel="stylesheet" type="text/css" href="../../static/styles/bootstrap/css/bootstrap.css">
 <div class="container-fluid">
-	<!-- <div id="droppable" style="background-color:yellow;width:200px;height:200px;">123</div>
-	<button id="check">check</button> -->
-	{% for category in categorys %}
-	<div class="c btn btn-primary" data-id="{{category.id}}">{{category.categoryname}}</div>
-	{% endfor %}
+	<div class="row">
+	<div class="col-3"></div>
+	<div class="col-9">
+		{% for category in categorys %}
+		<div class="c btn btn-primary" style="margin:10px 45px;font-size:15px;font-weight:500" data-id="{{category.id}}">{{category.categoryname}}</div>
+		{% endfor %}
+	</div>
+	<div class="col-3"></div>
 </div>
+
+</div>
+<hr>
 <div class="container">
-	
+
 	<div class="row beer-list">
 
 		{% for product in products %}
-		<div class="col-xs-4 col-sm-3 col-md-3 col-lg-2 item" name="{{product.category_id.id}}">
+		<div class="col-xs-4 col-sm-3 col-md-3 col-lg-2 item" name="{{product.category_id.id}}" id="{{product.id}}">
 			<a href="{%url 'beer:beerinfo' product.id%}">
 				<div class="pic center-block">
 					<img src="/uploadfiles/{{product.productimg}}" alt="" width="280" height="400" class="img-responsive col-xs-12">
@@ -38,33 +44,167 @@
 	</div>
 </div>
 
+<div id="droppable" style="border-radius:5px;background-color:#f5f5f5;width:400px;height:100%;margin-left:30px;">
+	<div id="mi" class="tog" style="float:right;margin-right:10px;"><i class="fa fa-minus fa-2x" aria-hidden="true"></i></div>
+	
+	<table class="table" >
+		<thead>
+			<tr>
+				<th>IMG</th>
+				<th>Price</th>
+				<th>Quantity</th>
+			</tr>
+		</thead>
+		<tbody id="t">
+
+		</tbody>
+	</table>
 
 
 
+
+<a href="{% url 'beer:cartshow' %}" style="width:400px" class="btn btn-primary">Check</a>
+</div>
+
+<div id="pl"><i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i></i></i></div>
 
 
 
 
 {%endblock%} {% block 'script' %}
 
-<!-- <script> 
+<script> 
+	$('#pl').hide()
+	$('#mi').click(function(){
+		$('#droppable').hide(2000)
+		$('#pl').show(2000)
+	})
+	$('#pl').click(function(){
+		$('#droppable').show(2000)
+		$('#pl').hide(2000)
+	})
 
-$( function() {
-		$( ".item" ).draggable();
-	  } );
 
-	  var li =[]
+
+
+
+	var li = []
+	var liq = []
+	var product_id_list = ('{{li}}').replace('[', '').replace(']', '').split(',')
+	var product_q_list = ('{{li1}}').replace('[', '').replace(']', '').split(',')
+	var i = -1
+	{% for product_cart in product_list %}
+	i++
+	img = '<img src="/uploadfiles/{{product_cart.0.productimg}}" alt="">'
+	var trid = 'cart' + '{{product_cart.0.id}}'
+	$('#t').append('<tr data-id =' + trid + '><td></td><td></td><td></td></tr>')
+
+	$('#t>tr:last-child>td:eq(0)').prepend(img)
+	$('#t>tr:last-child>td:eq(1)').prepend({{ product_cart.0.price }})
+	$('#t>tr:last-child>td:eq(2)').prepend(product_q_list[i])
+
+
+	{% endfor %}
+
+
+
+	$('#t>tr>td>img').css({ 'width': '50px', 'height': '50px' })
+
+
+
+
+	$(function () {
+		$(".item").draggable({
+			helper: "clone",
+			revert: 'valid',
+
+		});
+	});
+
 	$("#droppable").droppable({
+
 		drop: function (event, ui) {
-			alert($(this).html())
-			
+			var id = ui.draggable.attr('id')
+			var a = $(ui.draggable).clone()
+			var trid = 'cart' + id
+			var price = 0
+			{% for product in products %}
+				var prodcutid = {{product.id}}
+				if(prodcutid == id){
+					price = {{product.price}}
+				}
+			{% endfor %}
+
+			lli = []
+			for (var i = 0; i < 10; i++) {
+
+				lli.push($('table>tbody>tr:eq(' + i + ')').data('id'))
+
+
+
+			}
+
+
+			if (lli.indexOf(trid) > -1) {
+				var q = parseInt($('#t>tr:last-child>td:eq(2)').text())+1
+				$('#t>tr:last-child>td:eq(2)').text(q)
 				
+			}
+			else {
+				img = a.find('img')
+				$('#t').append('<tr data-id =' + trid + '><td></td><td></td><td></td></tr>')
+				$('#t>tr:last-child>td:eq(0)').prepend(img)
+				$('#t>tr:last-child>td:eq(1)').prepend(price)
+				$('#t>tr:last-child>td:eq(2)').prepend(1)
+				$('#t>tr>td>img').css({ 'width': '50px', 'height': '50px' })
+
+			}
+
+
+
+
+
+
+			var lo = product_id_list.indexOf(id)
+			if (lo >= 0) {
+				q = product_q_list[lo]
+
+			}
+			else {
+				// $('#t').append('<tr><td></td><td></td></tr>')
+
+				// $('#t>tr:last-child>td:eq(0)').prepend(img)
+				// $('#t>tr:last-child>td:eq(1)').prepend(q)
+
+				// $('#t>tr>td>img').css({'width':'50px','height':'50px'})
+
+			}
+
+			$.get('beercartadd', { 'pid': id }, function () {
+
+
+
+
+			})
+
+
+			li.push(id)
+
+
+
+
+
+
+
+
+
 		}
 	});
-	$('#check').click(function(){
-		alert(li)
+
+	$('#check').click(function () {
+		
 	})
-</script> -->
+</script>
 
 
 

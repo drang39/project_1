@@ -1,5 +1,13 @@
  
  {% block 'nav' %}
+ <style>
+ .navbar-nav .nav-item .nav_item_style {
+	color:#6b6b6b;
+}
+.navbar #white {
+	color:#6b6b6b ;
+}
+</style>
  <!-- nav -->
  <nav class="navbar navbar-expand-lg bg-light navbar-light nav_style">
     <a class="navbar-brand" id="white" href="{% url 'home:index' %}">Beer Deer</a>
@@ -16,18 +24,21 @@
           <a class="nav-link" id="white" href="{% url 'home:about' %}">About</a>
         </li>
         <li class="nav-item">
-            {%if user.is_authenticated and user.is_staff  %}
-          <a class="nav-link disabled" id="white" href="{% url 'product:index' %}">Beer</a>
-          {%else%}
+          
+          
+        
           <a class="nav-link disabled" id="white" href="{% url 'beer:index' %}">Beer</a>
-          {%endif%}
+   
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link disabled" id="white" href="#">info</a>
-        </li>
+        </li> -->
       </ul>
       {%if user.is_authenticated %}
       <span class="alert-pimary">hello {{user.get_username}}</span>
+      {%if user.is_authenticated and user.is_staff  %}
+      <a class="btn btn-danger" id="white" href="{% url 'product:index' %}">Product Manage</a>
+      {%endif%}
       <a href="{% url 'beer:membercomment' %}"  class="btn btn-primary">my comments</a>
       <a href="{% url 'user:userinfo' %}" class="btn btn-primary">my info</a>
       <a href="{% url 'user:logout' %}" class="btn btn-primary">Log out</a> 

@@ -1,7 +1,139 @@
-{% for product in product_list %}
 
-{% for i in product %}
-{{i.id}}
-{% endfor %}
-<br>
-{% endfor %}
+{% extends 'base.html' %}
+{% block 'css' %}
+{%endblock%}
+{% block 'body' %}
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product name</th>
+                <th>Product img</th>
+                <th>Product Price</th>
+                <th>Product Quantity</th>
+                <th>Buttons</th>
+            </tr>
+        </thead>
+
+        <tbody>
+                {% for product in product_list %}
+           
+                {% for i in product %}
+            <tr>
+
+                <td>{{i.productname}}</td>
+                <td><img src="/uploadfiles/{{i.productimg}}" alt="" width="70px" height="100px"></td>
+                <td>{{i.price}}</td>
+                <td></td>
+                <td>
+                    <form action="{% url 'beer:cartedit' %}">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{i.id}}" name="pid">
+                        <input type="hidden" value="" name="quantity">
+                        <button type="button" class="btn btn-default edit">Edit</button>
+                    </form>
+                    <form action="{% url 'beer:cartdelete'  %}">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{i.id}}" name="pid">
+                        <button type="button" class="btn btn-danger delete">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+   
+            {% endfor %}
+        </tbody>
+
+
+
+    </table>
+<hr>
+<div style="float:right;font-size:25px;font-weight:900;margin-right:60px;">$ <span style="" id="total"></span></div>
+
+</div>
+
+
+
+
+
+
+
+
+{%endblock%}
+
+{% block 'script' %}
+
+<script>
+    var ql = {{product_quantity_list}}
+
+    for(var i =0;i<ql.length;i++)
+    {   
+        j= i+1;
+        $('tr:eq('+j+')>td:eq(3)').text(ql[i]);
+        
+        $('tr:eq('+j+')>td:eq(4)>form>input:eq(2)').val(ql[i]);
+
+    }
+  
+    $('.edit').click(function(){
+        
+        if ($(this).text()=='Edit'){
+            var qo = $(this).parent().parent().parent().children('td:eq(3)').text()
+
+            $(this).parent().parent().parent().children('td:eq(3)').empty()
+            $(this).parent().parent().parent().children('td:eq(3)').append('<input type="number" value='+qo+'>')
+            $(this).empty().text('confirm')
+            cal()
+
+        } else {
+            var q = $(this).parent().parent().parent().children('td:eq(3)').children().val()
+
+            $(this).parent().parent().parent().children('td:eq(3)').empty().append(q)
+
+            $(this).empty().text('Edit')
+            var id =  $(this).parent().parent().parent().children('td:eq(4)').find('input[name="pid"]').val()
+            $.get('cartedit',{'pid':id,'q':q},function(){
+
+            })
+            cal()
+        }
+       
+    })
+
+    $('.delete').click(function(){
+        var id =  $(this).parent().parent().parent().children('td:eq(4)').find('input[name="pid"]').val()
+        
+        $.get('cartdelete',{'pid':id},function(){
+
+            })
+        $(this).parent().parent().parent().remove()
+        cal()
+    })
+    $(document).ready(cal())
+
+
+   
+    function cal(){
+         var price = 0
+         var l = $('tbody>tr').length 
+    for (var i =0;i<l;i++){
+     
+
+        price = price + (parseInt($('table>tbody>tr:eq('+i+')>td:eq(2)').text()) *parseInt($('table>tbody>tr:eq('+i+')>td:eq(3)').text()))
+        
+        
+        
+
+    }
+    $('#total').text(price)
+    }
+   
+
+
+
+</script>
+
+
+
+
+{%endblock%}

@@ -10,7 +10,15 @@ from collections import Counter
 
 # Create your views here.
 def index(request):
-
+    if 'product_id_list' in request.session and 'product_q_list' in request.session:
+        li = request.session['product_id_list']
+        li1 = request.session['product_q_list']
+        product_list = []
+        for productid in li :
+        
+            product_list.append(Product.objects.filter(id=int(productid)))
+        product_quantity_list = li1
+  
     products = Product.objects.all()
     brands = Brand.objects.all()
     categorys = Category.objects.all()
@@ -39,7 +47,7 @@ def beerinfo(request,id):
 
 def beerinfocomment(request,id=None):
     if request.method =='POST':
-        print(request.POST['fan'])
+        
         form = CommetForm(request.POST)
         
         if form.is_valid():
@@ -111,38 +119,128 @@ def beersearchcontent(request):
 
 def beercartadd(request):
     
-    pid = request.GET['pid']
-    
+    pid = int(request.GET['pid'])
+    # if request.user.is_authenticated:
+        
+    #     text = str(request.user.username+'productiL')
+    #     text1 = str(request.user.username+'productqL')
+    #     productiL = request.session[text]
+    #     productqL = request.session[text1]
+        
+    #     if pid in productiL:
+            
+    #         productqL[productiL.index(pid)] = productqL[productiL.index(pid)]+1
+    #         request.session[text1] = productqL
 
+    #     else :
+
+    #         productiL.append(pid)
+    #         productqL.append(1)
+    #         request.session[text] =productiL
+    #         request.session[text1] =productqL 
+
+    # else :
     
     if 'product_id_list' in request.session:
+        
+        if pid in request.session['product_id_list']:
             li = request.session['product_id_list']
-            li.append(pid)
+            li1 = request.session['product_q_list']
+
+            li1[li.index(pid)] = li1[li.index(pid)]+1
             request.session['product_id_list'] = li
+            request.session['product_q_list'] = li1
+            
+
+        else:
+        
+            li = request.session['product_id_list']
+            li1 = request.session['product_q_list']
+            
+            li.append(pid)
+            li1.append(1)
+            
+            request.session['product_id_list'] = li
+            request.session['product_q_list'] = li1
+            
+    else :
+
+        li =[]
+        li1 = []
+        li.append(pid)
+        li1.append(1)
+        request.session['product_id_list'] = li
+        request.session['product_q_list'] = li1
+    
+    return HttpResponse('/')
+def cartshow(request):
+
+    # if request.user.is_authenticated:
+        
+    #     text = str(request.user.username+'productiL')
+    #     text1 = str(request.user.username+'productqL')
+    #     li = request.session[text]
+    #     li1 = request.session[text1]
+    #     product_list = []
+    #     for productid in li[1:] :
+            
+    #         product_list.append(Product.objects.filter(id=int(productid)))
+
+    #         product_quantity_list = li1[1:]
+            
+    #     return render(request,'beer/cartshow.html',locals())
+
+
+
+    # else:
+
+    if 'product_id_list' in request.session and 'product_q_list' in request.session:
+        li = request.session['product_id_list']
+        li1 = request.session['product_q_list']
+        product_list = []
+        for productid in li :
+        
+            product_list.append(Product.objects.filter(id=int(productid)))
+            product_quantity_list = li1
+            
+        return render(request,'beer/cartshow.html',locals())
+
+
+
 
     else :
-        li = []
-        li.append(pid)
-        request.session['product_id_list'] = li
+        return HttpResponse('nothing in the cart')
 
-    print(request.session['product_id_list'])
-
-
-  
-    return redirect('/')
-def cartshow(request):
-    li = request.session['product_id_list']
     
-    l = Counter(li)
-    print(l)
 
 
-    product_list = []
-   
-    for productid in li:
-        product_list.append(Product.objects.filter(id=productid))
-    
-    return render(request,'beer/cartshow.html',locals())
+def cartedit(request):
 
-
+    if request.method =='GET':
+        pid = int(request.GET['pid'])
+        q  = int(request.GET['q'])
+        li = request.session['product_id_list']
+        li1 = request.session['product_q_list']
         
+        location = li.index(pid)
+        li1[location] = q
+        
+        request.session['product_id_list'] = li 
+        request.session['product_q_list'] = li1
+        
+        return HttpResponse('/')
+def cartdelete(request):
+    
+    if request.method =='GET':
+        
+        pid = int(request.GET['pid'])
+        
+        li = request.session['product_id_list']
+        li1 = request.session['product_q_list']
+        location = li.index(pid)
+        li.pop(location)
+        li1.pop(location)
+        request.session['product_id_list'] = li 
+        request.session['product_q_list'] = li1
+        
+        return HttpResponse('/')

@@ -40,7 +40,7 @@
     <!-- start comment box   -->
     <div class="row comment-box">
         <div class="col">
-            <form class="form-control" action="{%url 'beer:beerinfocomment' 8 %}" method="post" id="form1">
+            <form class="form-control" action="{%url 'beer:beerinfocomment' product.id %}" method="post" id="form1">
                 {% csrf_token %}
                 <div class="form-group rating">
 

@@ -70,6 +70,14 @@ def login_view(request):
         if(user is not None):
             
             login(request, user)
+            productiL = []
+            productqL = []
+            productiL.append(user.username)
+            productqL.append(user.username)
+            text = str(user.username+'productiL')
+            text1 = str(user.username+'productqL')
+            request.session[text] = productiL
+            request.session[text1] = productqL
             warning = 'login'
             name = user.username
             return render(request,'home/index.html',locals())
