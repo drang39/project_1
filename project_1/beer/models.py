@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
+
 
 
 
@@ -40,3 +40,15 @@ class Comment(models.Model):
     time = models.DateField(null=True)
     class Meta:
         db_table = "comment"
+
+class Order(models.Model):
+
+    time = models.DateField(null=True)
+    
+    amount = models.IntegerField(null=False)
+    user_id = user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    product_id_list = models.CharField(max_length=100,null = True)
+    product_quantity_list =  models.CharField(max_length=100,null = True)
+
+    class Meta:
+        db_table = "order"

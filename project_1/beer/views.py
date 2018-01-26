@@ -244,3 +244,51 @@ def cartdelete(request):
         request.session['product_q_list'] = li1
         
         return HttpResponse('/')
+
+def order(request):
+    # if request.method =="GET":
+    #     ol = request.GET['ol']
+
+    #     print(ol)
+
+    if request.method =='POST':
+        li = request.session['product_id_list']
+        li1 = request.session['product_q_list']
+        amount = request.POST['amount']
+
+        now = datetime.datetime.now()
+        order = Order.objects.create(time = now, amount = amount ,user_id = (User.objects.get(id=(request.user.id)) if request.user.id else User.objects.get(id=(19))  ),product_id_list=li,product_quantity_list=li1)
+        orders = Order.objects.filter(user_id = request.user.id)
+        product_list =[]
+        for productid in li :
+        
+            product_list.append(Product.objects.filter(id=int(productid)))
+        request.session['product_id_list'] = []
+        request.session['product_q_list'] = []
+        return render(request,'beer/order.html',locals())
+    else :
+        orders = Order.objects.filter(user_id = request.user.id)
+        product_order_list = []
+
+        for order in orders:
+            x = order.product_id_list
+            
+            li = x.replace('[',"").replace(']','').split(',')
+            product_list = []
+            
+            for productid in li :
+                
+                product_list.append(Product.objects.filter(id=int(productid)))
+            product_order_list.append(product_list)
+            product_order_list.append(0)
+
+        
+
+        return render(request,'beer/order.html',locals())
+def orderall(request):
+    if request.user.is_staff:
+        print(1)
+        orders = Order.objects.all()
+        return render(request,'beer/orderall.html',locals())
+    else: 
+        return render(request,'home/index.html')

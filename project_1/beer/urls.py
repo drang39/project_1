@@ -14,4 +14,6 @@ urlpatterns = [
     path('cartshow',views.cartshow,name='cartshow'),
     path('cartedit',views.cartedit,name='cartedit'),
     path('cartdelete',views.cartdelete,name='cartdelete'),
+    path('order',views.order,name='order'),
+    path('orderall',views.orderall,name='orderall')
 ]

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+
+{% block 'css' %}
+{% endblock %}
+
+{% block 'body' %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Time</th>
+            
+            <th>Amount</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{order.time}}</td>
+           
+          
+
+
+
+            <td>{{order.amount}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+{% block 'script' %}
+
+<script>
+
+
+
+
+                    
+
+
+
+
+
+
+</script>
+
+
+
+{% endblock %}

@@ -48,11 +48,18 @@
 
     </table>
 <hr>
-<div style="float:right;font-size:25px;font-weight:900;margin-right:60px;">$ <span style="" id="total"></span></div>
+
+<form action="{% url 'beer:order' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="amount" value="" id="amount">
+    <button class="btn btn-primary" style="float:right">
+        check
+    </button>
+</form>
+
+<div style="float:right;font-size:25px;font-weight:900;margin-right:30px;">$ <span style="" id="total"></span></div>
 
 </div>
-
-
 
 
 
@@ -126,6 +133,7 @@
 
     }
     $('#total').text(price)
+    $('#amount').val(price)
     }
    
 
